@@ -1,45 +1,27 @@
-import React, {useState} from "react";
+import React from "react";
 
-const Counter = () => {
-    const [count, setCount] = useState(0)
-    const tags = ['tag1', 'tag2', 'tag3']
+const Counter = ({value, name, id, onDecrement, onDelete, onIncrement}) => {
     const formCount = () => {
-        return count === 0 ? 'Null' : count
+        return value === 0 ? 'Null' : value
     }
     const getBasicClasses = () => {
         let classes = 'badge m-2 bg-'
-        classes += count === 0 ? 'danger' : 'primary'
+        classes += value === 0 ? 'danger' : 'primary'
         return classes
     }
 
-    const renderTags = () => {
-        if (tags.length === 0) return 'Tags not exist'
-        return (<ul>
-            {tags.map(tag =>
-                <li key={tag}>{tag}</li>)
-            }
-        </ul>)
-    }
-
-    const handleIncrement = productId => {
-        setCount(count + 1)
-    }
-
-    const handleDecrement = productId => {
-        setCount(count - 1)
-    }
-
     return (
-        <>
-            {renderTags()}
+        <div>
+            <h4>{name}</h4>
             <h1 className={getBasicClasses()}>Counter: {formCount()} </h1>
-            <button onClick={() => (handleIncrement({id: 1}))} className={"btm btn-sm btn-success m-3"}>Button Increment</button>
+            <button onClick={() => (onIncrement(id))} className={"btm btn-sm btn-success m-3"}>Button Increment</button>
             <button
-                disabled={ count === 0 ? true : false}
-                onClick={() => (handleDecrement({id: 1}))}
-                className={count === 0 ? "btm btn-sm btn-secondary" : "btm btn-sm btn-info"}
+                disabled={ value === 0}
+                onClick={() => (onDecrement(id))}
+                className={value === 0 ? "btm btn-sm btn-secondary" : "btm btn-sm btn-info"}
             >Button Decrement</button>
-        </>
+            <button className="btn btn-s btn-danger m-2" onClick={() => onDelete(id)}>Delete</button>
+        </div>
 
 
     )
